@@ -1,15 +1,6 @@
 import type { Request, Response } from "express";
-import { ClickHouseClient, createClient } from "@clickhouse/client";
 import { v4 as uuidv4 } from "uuid";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const client: ClickHouseClient = createClient({
-  host: process.env.CLICKHOUSE_HOST,
-  username: process.env.CLICKHOUSE_USERNAME,
-  password: process.env.CLICKHOUSE_PASSWORD,
-});
+import { clickhouse } from "../services";
 
 const log = async (req: Request, res: Response) => {
   const id = uuidv4();
@@ -33,12 +24,12 @@ const log = async (req: Request, res: Response) => {
     params: JSON.stringify(params),
   };
   try {
-    await client.insert({
+    await clickhouse.client.insert({
       table: "logs",
       values: [requestSummary],
       format: "JSONEachRow",
     });
-    client.close();
+    clickhouse.client.close();
   } catch (error) {
     return res.status(500).json({
       error: "Internal server error.",
