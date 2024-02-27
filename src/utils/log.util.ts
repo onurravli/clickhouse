@@ -9,7 +9,7 @@ const log = async (req: Request, res: Response) => {
   const path = req.path;
   const url = req.url;
   const method = req.method;
-  const date = Date.now();
+  const date = Date.now().toString();
   const query = req.query;
   const params = req.params;
   const requestSummary = {
