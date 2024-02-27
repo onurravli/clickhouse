@@ -13,9 +13,11 @@ const log = async (req: Request, res: Response) => {
   const query = req.query;
   const params = req.params;
   const cookies = req.cookies;
+  const baseUrl = req.baseUrl;
   const requestSummary = {
     ip: ip,
     port: port,
+    baseUrl: baseUrl,
     path: path,
     url: url,
     id: id.toString(),
