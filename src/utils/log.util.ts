@@ -12,6 +12,7 @@ const log = async (req: Request, res: Response) => {
   const date = Date.now().toString();
   const query = req.query;
   const params = req.params;
+  const cookies = req.cookies;
   const requestSummary = {
     ip: ip,
     port: port,
@@ -22,6 +23,7 @@ const log = async (req: Request, res: Response) => {
     date: date,
     query: JSON.stringify(query),
     params: JSON.stringify(params),
+    cookies: cookies,
   };
   try {
     await clickhouse.client.insert({
